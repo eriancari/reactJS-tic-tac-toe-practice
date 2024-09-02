@@ -1,12 +1,17 @@
- 
+
 import { useState } from "react";
 
-export default function Player({ name, symbol, isActive }) {
+export default function Player({ name, symbol, isActive, onChangeName }) {
 	const [playerName, setPlayerName] = useState(name);
 	const [isEditing, setIsEditing] = useState(false);
-	
+
 	function handleEdit() {
-		setIsEditing((editing) => !editing ); // "editing" has the latest available state value
+		setIsEditing((editing) => !editing); // "editing" has the latest available state value
+
+		if (isEditing) {
+			onChangeName(symbol, playerName);
+		}
+
 	}
 
 	function handleChange(event) {
@@ -14,9 +19,9 @@ export default function Player({ name, symbol, isActive }) {
 	}
 
 	let displayName = <span className="player-name">{playerName}</span>
-	
+
 	if (isEditing) {
-		displayName = <input type="text" required value={playerName} onChange={handleChange}/>
+		displayName = <input type="text" required value={playerName} onChange={handleChange} />
 	}
 
 	return (
